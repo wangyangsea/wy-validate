@@ -19,3 +19,7 @@ npm run build --report
 ```
 ### 项目说明
 第一版暂时只有部分功能，支持blur失去焦点校验，支持批量校验。随后会根据新的知识不停迭代
+
+附： 
+  
+  [async-validator](https://github.com/yiminghe/async-validator "async-validator")
