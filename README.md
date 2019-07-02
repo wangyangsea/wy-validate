@@ -17,5 +17,5 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### 项目说明
+第一版暂时只有部分功能，支持blur失去焦点校验，支持批量校验。随后会根据新的知识不停迭代
