@@ -16,6 +16,7 @@ import WForm from '@/base/form/form'
 import FormItem from '@/base/form-item/form-item'
 import WInput from '@/base/input/input'
 import Emitter from '@/mixins/emitter'
+// import { findComponentsDownward } from '@/utils/assist'
 export default {
   mixins: [Emitter],
   name: 'index',
@@ -54,6 +55,10 @@ export default {
     }
   },
   mounted () {
+    // 测试 findComponentsDownward
+    // const children = findComponentsDownward(this, 'w-input')
+    // console.log(children)
+    // 测试结束
     this.capture('w-input', 'test', 'test')
   },
   methods: {

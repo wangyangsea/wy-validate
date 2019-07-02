@@ -1,6 +1,6 @@
 # wy-validate
-
-> A Vue.js project
+## branch: findComponents
+> 练习5种寻找不同位置的的对应组件的函数方法
 
 ## Build Setup
 

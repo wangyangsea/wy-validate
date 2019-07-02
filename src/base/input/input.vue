@@ -9,6 +9,7 @@
 </template>
 <script>
 import Emitter from '@/mixins/emitter'
+// import { findComponentUpward } from '@/utils/assist'
 export default {
   mixins: [Emitter],
   name: 'w-input',
@@ -31,7 +32,11 @@ export default {
       currentValue: this.value
     }
   },
-  mounted () {},
+  mounted () {
+    // 测试 findComponentUpward
+    // const form = findComponentUpward(this, 'w-form')
+    // console.log(form)
+  },
   methods: {
     inputBlur () {
       this.dispatch('form-item', 'on-input-blur', this.currentValue)
