@@ -56,5 +56,6 @@ export default {
 <style lang="scss" scoped>
 .checkbox-group {
   display: inline-block;
+  text-align: left;
 }
 </style>

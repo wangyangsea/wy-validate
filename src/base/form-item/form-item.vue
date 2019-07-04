@@ -1,6 +1,6 @@
 <template>
   <div class="form-item">
-    <label :class="isRequired ? 'is_required' : ''">{{label}}:</label>
+    <label :class="isRequired ? 'is_required form-label' : 'form-label'">{{label}}:</label>
     <slot></slot>
     <p v-if="validateState === 'error'" class="error-text">{{validateMessage}}</p>
   </div>
@@ -109,7 +109,7 @@ export default {
   width: 510px;
   position: relative;
   margin: 0 auto 40px;
-  label {
+  > .form-label {
     display: inline-block;
     width: 130px;
     text-align: right;

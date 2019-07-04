@@ -42,6 +42,7 @@ const isFullName = (rule, val) => {
   return /\w/.test(value)
 }
 const hobby = (rule, val) => val.length >= 2
+const sexValidate = (rule, val) => val.length > 0
 
 export const loginRules = {
   name: [
@@ -64,6 +65,15 @@ export const loginRules = {
       message: '至少勾选2项',
       required: true,
       validator: hobby,
+      trigger: constant.CHANGE
+    }
+  ],
+  sex: [
+    {
+      type: 'number',
+      message: '请选择性别',
+      required: true,
+      validator: sexValidate,
       trigger: constant.CHANGE
     }
   ],

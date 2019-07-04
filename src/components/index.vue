@@ -7,18 +7,36 @@
       <form-item label="邮箱" prop="email">
         <w-input name="email" v-model="validateModes.email"/>
       </form-item>
+      <form-item label="性别" prop="sex">
+        <div style="width: 342px;display:inline-block;text-align: left;">
+          <w-radio
+            v-for="(item, index) in sexArr"
+            v-model="validateModes.sex"
+            name="sex"
+            :key="index"
+            :label="index"
+          >{{item}}</w-radio>
+        </div>
+      </form-item>
       <form-item label="兴趣爱好" prop="checkedArr">
         <w-checkbox-group v-model="validateModes.checkedArr">
           <w-checkbox v-for="(item,index) in checkboxText" :key="index" :label="item">{{item}}</w-checkbox>
         </w-checkbox-group>
       </form-item>
       <form-item label="用户协议" prop="own">
-        <w-checkbox name="own" v-model="validateModes.own" style="width:300px; color:blue">
+        <w-checkbox
+          name="own"
+          v-model="validateModes.own"
+          style="width: 342px;display:inline-block; color:blue;text-align: left;"
+        >
           <a href="javascript:;" style="color:#2793ff; text-decoration: underline">《我是用户协议协议》</a>
         </w-checkbox>
       </form-item>
       <button type="button" class="submit_btn" @click="handleSubmit">表单验证</button>
     </w-form>
+    <br>
+    <br>
+    <br>
   </div>
 </template>
 <script>
@@ -26,6 +44,7 @@ import WForm from '@/base/form/form'
 import FormItem from '@/base/form-item/form-item'
 import WInput from '@/base/input/input'
 import WCheckbox from '@/base/checkbox/checkbox'
+import WRadio from '@/base/radio/radio'
 import WCheckboxGroup from '@/base/checkbox/checkbox-group'
 import Emitter from '@/mixins/emitter'
 import { loginRules } from '@/utils/validateRules'
@@ -37,7 +56,8 @@ export default {
     FormItem,
     WInput,
     WCheckbox,
-    WCheckboxGroup
+    WCheckboxGroup,
+    WRadio
   },
   data () {
     return {
@@ -45,10 +65,12 @@ export default {
       validateModes: {
         name: '',
         email: '',
+        sex: '',
         checkedArr: [],
         own: false
       },
-      checkboxText: ['电影', '跑步', '运动', '逛街', '看书']
+      checkboxText: ['电影', '跑步', '运动', '逛街', '看书'],
+      sexArr: ['男', '女', '保密']
     }
   },
   watch: {
