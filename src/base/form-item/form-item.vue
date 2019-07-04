@@ -80,7 +80,6 @@ export default {
     },
     validate (trigger, callback = function () {}) {
       const rules = this.getFilterRules(trigger)
-      console.log(rules)
       if (!rules || !rules.length) {
         return true
       }
@@ -90,9 +89,7 @@ export default {
       const validator = new AsyncValidator(descriptor)
       let model = {}
       model[this.prop] = this.fieldValue
-      console.log(model)
       validator.validate(model, { firstFields: true }, errors => {
-        console.log(errors)
         this.validateState = !errors ? 'success' : 'error'
         this.validateMessage = errors ? errors[0].message : ''
 
