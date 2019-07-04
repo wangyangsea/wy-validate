@@ -8,7 +8,6 @@
 <script>
 import AsyncValidator from 'async-validator'
 import Emitter from '@/mixins/emitter'
-import { findComponentDownward, findBrothersComponents } from '@/utils/assist'
 export default {
   mixins: [Emitter],
   name: 'form-item',
@@ -32,14 +31,6 @@ export default {
     }
   },
   mounted () {
-    // 测试 findComponentDownward方法
-    // const child = findComponentDownward(this, 'w-input')
-    // console.log(child)
-    // 测试结束
-    // 测试 findBrothersComponents
-    const child = findBrothersComponents(this, 'form-item')
-    console.log(child)
-    // 测试结束
     if (this.prop) {
       this.dispatch('w-form', 'on-form-item-add', this)
       this.currentValue = this.fieldValue
@@ -61,12 +52,19 @@ export default {
      */
     setInputListen () {
       this.$on('on-input-blur', this.listenBlur)
+      this.$on('on-form-change', this.listenChange)
     },
     /**
      * input失去焦点回调
      */
     listenBlur (val) {
       this.validate('blur')
+    },
+    /**
+     * input失去焦点回调
+     */
+    listenChange (val) {
+      this.validate('change')
     },
     getRules () {
       const rules = this.form.rules[this.prop] || []
@@ -85,7 +83,6 @@ export default {
       if (!rules || !rules.length) {
         return true
       }
-
       this.validateState = 'validating'
       let descriptor = {}
       descriptor[this.prop] = rules

@@ -1,6 +1,6 @@
 # wy-validate
-## branch: findComponents
-> 练习5种寻找不同位置的的对应组件的函数方法
+## branch: checkboxGroup
+> 联系多选框组件
 
 ## Build Setup
 
@@ -18,7 +18,7 @@ npm run build
 npm run build --report
 ```
 ### 项目说明
-第一版暂时只有部分功能，支持blur失去焦点校验，支持批量校验。随后会根据新的知识不停迭代
+多选框组件实践
 
 附： 
   

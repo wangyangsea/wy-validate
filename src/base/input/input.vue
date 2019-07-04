@@ -32,11 +32,7 @@ export default {
       currentValue: this.value
     }
   },
-  mounted () {
-    // 测试 findComponentUpward
-    // const form = findComponentUpward(this, 'w-form')
-    // console.log(form)
-  },
+  mounted () {},
   methods: {
     inputBlur () {
       this.dispatch('form-item', 'on-input-blur', this.currentValue)

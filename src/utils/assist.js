@@ -2,7 +2,7 @@
 function findComponentUpward (context, componentName) {
   let parent = context.$parent
   if (!parent) {
-    throw new Error(`没有定义${componentName}的组件`)
+    return
   }
   let name = parent.$options.name
   if (name === componentName) {
