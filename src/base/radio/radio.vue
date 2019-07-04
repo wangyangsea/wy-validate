@@ -35,15 +35,12 @@ export default {
       model: this.value
     }
   },
-  mounted () {
-    console.log(this.value)
-  },
   methods: {
     handleChange (e) {
       const val = e.target.value
       this.model = val
       this.$emit('input', val)
-      console.log(val)
+      this.dispatch('form-item', 'on-form-change', val)
     }
   }
 }

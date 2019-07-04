@@ -36,12 +36,14 @@ function lengthLimit (min = 0, max = 1000000) {
 
 // true/false判断 适合 单选 单多选 select等~
 const checked = (rule, value) => value
+const selected = (rule, value) => value !== ''
 
 const isFullName = (rule, val) => {
   const value = trim(val)
   return /\w/.test(value)
 }
 const hobby = (rule, val) => val.length >= 2
+
 const sexValidate = (rule, val) => val.length > 0
 
 export const loginRules = {
@@ -65,6 +67,15 @@ export const loginRules = {
       message: '至少勾选2项',
       required: true,
       validator: hobby,
+      trigger: constant.CHANGE
+    }
+  ],
+  professional: [
+    {
+      type: 'string',
+      message: '请选择专业',
+      required: true,
+      validator: selected,
       trigger: constant.CHANGE
     }
   ],

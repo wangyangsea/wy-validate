@@ -7,6 +7,18 @@
       <form-item label="邮箱" prop="email">
         <w-input name="email" v-model="validateModes.email"/>
       </form-item>
+      <form-item label="专业" prop="professional">
+        <div style="width: 342px;display:inline-block;text-align: left;">
+          <w-select v-model="validateModes.professional">
+            <option
+              v-for="(item, index) in options"
+              :key="index"
+              :value="item.value"
+              :disabled="item.disabled"
+            >{{item.text}}</option>
+          </w-select>
+        </div>
+      </form-item>
       <form-item label="性别" prop="sex">
         <div style="width: 342px;display:inline-block;text-align: left;">
           <w-radio
@@ -37,6 +49,7 @@
     <br>
     <br>
     <br>
+    <div class="select-box"></div>
   </div>
 </template>
 <script>
@@ -46,6 +59,7 @@ import WInput from '@/base/input/input'
 import WCheckbox from '@/base/checkbox/checkbox'
 import WRadio from '@/base/radio/radio'
 import WCheckboxGroup from '@/base/checkbox/checkbox-group'
+import WSelect from '@/base/select/select'
 import Emitter from '@/mixins/emitter'
 import { loginRules } from '@/utils/validateRules'
 export default {
@@ -57,7 +71,8 @@ export default {
     WInput,
     WCheckbox,
     WCheckboxGroup,
-    WRadio
+    WRadio,
+    WSelect
   },
   data () {
     return {
@@ -67,10 +82,33 @@ export default {
         email: '',
         sex: '',
         checkedArr: [],
-        own: false
+        own: false,
+        professional: ''
       },
       checkboxText: ['电影', '跑步', '运动', '逛街', '看书'],
-      sexArr: ['男', '女', '保密']
+      sexArr: ['男', '女', '保密'],
+      options: [
+        {
+          value: '111',
+          text: '自动化',
+          disabled: false
+        },
+        {
+          value: '222',
+          text: '计算机',
+          disabled: false
+        },
+        {
+          value: '333',
+          text: '信息安全',
+          disabled: false
+        },
+        {
+          value: '444',
+          text: '幼师',
+          disabled: false
+        }
+      ]
     }
   },
   watch: {
