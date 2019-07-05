@@ -12,7 +12,9 @@
   </label>
 </template>
 <script>
+import Emitter from '@/mixins/emitter'
 export default {
+  mixins: [Emitter],
   name: 'w-radio',
   props: {
     name: {
