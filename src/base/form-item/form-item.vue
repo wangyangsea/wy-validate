@@ -52,6 +52,7 @@ export default {
      */
     setInputListen () {
       this.$on('on-input-blur', this.listenBlur)
+      // this.$on('on-input-input', this.listenBlur)
     },
     /**
      * input失去焦点回调

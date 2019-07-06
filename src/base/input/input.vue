@@ -31,7 +31,6 @@ export default {
       currentValue: this.value
     }
   },
-  mounted () {},
   methods: {
     inputBlur () {
       this.dispatch('form-item', 'on-input-blur', this.currentValue)
@@ -39,6 +38,8 @@ export default {
     inputChange (e) {
       this.currentValue = e.target.value
       this.$emit('input', this.currentValue)
+      // 如果改表单需要 输入事件input的时候就开始校验 增加下面语句
+      this.dispatch('form-item', 'on-input-input', this.currentValue)
     }
   }
 }
