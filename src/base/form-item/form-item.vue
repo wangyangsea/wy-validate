@@ -1,8 +1,8 @@
 <template>
   <div class="form-item">
-    <label :class="isRequired ? 'is_required form-label' : 'form-label'">{{label}}:</label>
+    <label :class="isRequired ? 'is_required form-label' : 'form-label'">{{label ? `${label}:` : ''}}</label>
     <slot></slot>
-    <p v-if="validateState === 'error'" class="error-text">{{validateMessage}}</p>
+    <p v-if="validateState" class="error-text">{{validateMessage}}</p>
   </div>
 </template>
 <script>
@@ -26,7 +26,7 @@ export default {
     return {
       currentValue: '',
       isRequired: false,
-      validateState: '',
+      validateState: false,
       ValidateMessage: ''
     }
   },
@@ -52,6 +52,7 @@ export default {
      */
     setInputListen () {
       this.$on('on-input-blur', this.listenBlur)
+      this.$on('on-input-input', this.listenInput)
       this.$on('on-form-change', this.listenChange)
     },
     /**
@@ -61,43 +62,40 @@ export default {
       this.validate('blur')
     },
     /**
+     * input输入回调
+     */
+    listenInput (val) {
+      this.validate('input')
+    },
+    /**
      * input失去焦点回调
      */
     listenChange (val) {
       this.validate('change')
     },
-    getRules () {
-      const rules = this.form.rules[this.prop] || []
-      return [].concat(rules)
-    },
     getFilterRules (trigger) {
-      let rules = this.getRules()
-      // return rules.filter(rule => this.prop && rule.trigger === trigger)
-      return rules.filter(
-        // 这种比较方式的好处： trigger为空 或者匹配成功的情况都为 true
-        rule => !rule.trigger || rule.trigger.indexOf(trigger) !== -1
-      )
+      const rules = [...(this.form.rules[this.prop] || [])]
+      // 无trigger默认: "blur"
+      return rules.filter(rule => !rule.trigger || rule.trigger.indexOf(trigger) !== -1)
     },
     validate (trigger, callback = function () {}) {
       const rules = this.getFilterRules(trigger)
       if (!rules || !rules.length) {
         return true
       }
-      this.validateState = 'validating'
       let descriptor = {}
       descriptor[this.prop] = rules
       const validator = new AsyncValidator(descriptor)
       let model = {}
       model[this.prop] = this.fieldValue
-      validator.validate(model, { firstFields: true }, errors => {
-        this.validateState = !errors ? 'success' : 'error'
+      validator.validate(model, { firstFields: true }, (errors, fields) => {
+        this.validateState = !!errors
         this.validateMessage = errors ? errors[0].message : ''
-
         callback(this.validateMessage)
       })
     },
     resetField () {
-      this.validateState = ''
+      this.validateState = false
       this.validateMessage = ''
       this.form.modes[this.prop] = this.currentValue
     }
@@ -126,5 +124,6 @@ export default {
   margin: 0;
   position: absolute;
   left: 170px;
+  bottom: -20px;
 }
 </style>

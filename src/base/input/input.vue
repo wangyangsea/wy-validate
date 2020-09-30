@@ -2,14 +2,13 @@
   <input
     :type="type"
     :placeholder="placeholder"
-    :value="currentValue"
+    :value="value"
     @blur="inputBlur"
     @input="inputChange"
   >
 </template>
 <script>
 import Emitter from '@/mixins/emitter'
-// import { findComponentUpward } from '@/utils/assist'
 export default {
   mixins: [Emitter],
   name: 'w-input',
@@ -27,19 +26,19 @@ export default {
       default: 'text'
     }
   },
-  data () {
-    return {
-      currentValue: this.value
+  watch: {
+    value (ov, nv) {
+      // console.log(ov, nv)
     }
   },
   mounted () {},
   methods: {
     inputBlur () {
-      this.dispatch('form-item', 'on-input-blur', this.currentValue)
+      this.dispatch('form-item', 'on-input-blur', this.value)
     },
     inputChange (e) {
-      this.currentValue = e.target.value
-      this.$emit('input', this.currentValue)
+      this.$emit('input', e.target.value)
+      this.dispatch('form-item', 'on-input-input', e.target.value)
     }
   }
 }

@@ -24,7 +24,12 @@ function lengthLimit (min = 0, max = 1000000) {
   return {
     type: 'string',
     message: message,
-    validator: (rule, val) => {
+    validator: (rule, val, callback, source, options) => {
+      // console.log(rule, '=====')
+      // console.log(val)
+      // console.log(callback)
+      // console.log(source)
+      // console.log(options)
       const value = trim(val)
       return value.length >= min && value.length <= max
     },
@@ -35,16 +40,16 @@ function lengthLimit (min = 0, max = 1000000) {
 // 以下是自定义验证规则
 
 // true/false判断 适合 单选 单多选 select等~
-const checked = (rule, value) => value
+const checked = (rule, value) => value !== 0
 const selected = (rule, value) => value !== ''
 
 const isFullName = (rule, val) => {
   const value = trim(val)
-  return /\w/.test(value)
+  return /^\w*$/.test(value)
 }
 const hobby = (rule, val) => val.length >= 2
 
-const sexValidate = (rule, val) => val.length > 0
+const sexValidate = (rule, val) => typeof val === 'string'
 
 export const loginRules = {
   name: [
@@ -54,7 +59,6 @@ export const loginRules = {
       trigger: constant.BLUR
     },
     {
-      type: 'string',
       message: '用户名只能是数字、字母或下划线',
       validator: isFullName,
       trigger: constant.BLUR
@@ -81,16 +85,22 @@ export const loginRules = {
   ],
   sex: [
     {
-      type: 'number',
-      message: '请选择性别',
+      type: 'string',
+      message: '类型错误',
       required: true,
       validator: sexValidate,
+      trigger: constant.CHANGE
+    },
+    {
+      type: 'enum',
+      message: '超出范围',
+      enum: ['0', '1', '2'],
       trigger: constant.CHANGE
     }
   ],
   own: [
     {
-      type: 'string',
+      type: 'number',
       message: '请勾选用户条款',
       required: true,
       validator: checked,
