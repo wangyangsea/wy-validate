@@ -4,7 +4,7 @@
       <input
         v-if="group"
         type="checkbox"
-        :value="label"
+        :value="singleValue"
         :disabled="disabled"
         v-model="model"
         @change="handleChange"
@@ -35,33 +35,40 @@ export default {
       type: [String, Number, Boolean],
       default: false
     },
-    label: {
+    singleValue: {
       type: [String, Number, Boolean]
     },
     trueValue: {
       type: [String, Number, Boolean],
-      default: true
+      default: 1
     },
     falseValue: {
       type: [String, Number, Boolean],
-      default: false
+      default: 0
     }
   },
   data () {
     return {
-      currentValue: this.value,
+      currentValue: '',
       model: [],
       group: false,
       parent: null
     }
   },
   watch: {
-    value (val) {
-      if (val === this.trueValue || val === this.falseValue) {
-        this.updateModel()
-      } else {
-        throw new Error('Value should be trueValue or falseValue')
-      }
+    value: {
+      handler: function (val) {
+        this.$nextTick(() => {
+          if (!this.group) { // 无group情形
+            if (val === this.trueValue || val === this.falseValue) {
+              this.updateModel()
+            } else {
+              throw new Error('Value should be trueValue or falseValue')
+            }
+          }
+        })
+      },
+      immediate: true
     }
   },
   mounted () {
@@ -69,20 +76,11 @@ export default {
     if (this.parent) {
       this.group = true
     }
-    if (this.group) {
-      this.parent.updateModel(true)
-    } else {
-      this.updateModel()
-    }
   },
   methods: {
     handleChange (e) {
-      if (this.disabled) {
-        return
-      }
-      const checked = e.target.checked
-      this.currentValue = checked
-      const value = checked ? this.trueValue : this.falseValue
+      if (this.disabled) return
+      const value = e.target.checked ? this.trueValue : this.falseValue
       this.$emit('input', value)
       if (this.group) {
         this.parent.change(this.model)

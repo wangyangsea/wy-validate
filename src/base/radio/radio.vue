@@ -40,7 +40,6 @@ export default {
   methods: {
     handleChange (e) {
       const val = e.target.value
-      this.model = val
       this.$emit('input', val)
       this.dispatch('form-item', 'on-form-change', val)
     }

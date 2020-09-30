@@ -32,7 +32,14 @@
       </form-item>
       <form-item label="兴趣爱好" prop="checkedArr">
         <w-checkbox-group v-model="validateModes.checkedArr">
-          <w-checkbox v-for="(item,index) in checkboxText" :key="index" :label="item">{{item}}</w-checkbox>
+          <w-checkbox
+            v-for="(item,index) in checkboxText"
+            :key="index"
+            :single-value="item.value"
+            :disabled="item.disabled"
+          >
+            {{item.text}}
+          </w-checkbox>
         </w-checkbox-group>
       </form-item>
       <form-item label="用户协议" prop="own">
@@ -74,24 +81,51 @@ export default {
     WRadio,
     WSelect
   },
+  ha: 'rha',
   data () {
     return {
       validateRules: loginRules,
       validateModes: {
-        name: '',
+        name: 'ergou',
         email: '',
-        sex: '',
+        sex: '0',
         checkedArr: [],
-        own: false,
+        own: 0,
         professional: ''
       },
-      checkboxText: ['电影', '跑步', '运动', '逛街', '看书'],
+      checkboxText: [
+        {
+          text: '电影',
+          value: 0,
+          disabled: false
+        },
+        {
+          text: '跑步',
+          value: 1,
+          disabled: false
+        },
+        {
+          text: '运动',
+          value: 2,
+          disabled: false
+        },
+        {
+          text: '逛街',
+          value: 3,
+          disabled: false
+        },
+        {
+          text: '看书',
+          value: 4,
+          disabled: false
+        }
+      ],
       sexArr: ['男', '女', '保密'],
       options: [
         {
           value: '111',
           text: '自动化',
-          disabled: false
+          disabled: true
         },
         {
           value: '222',
@@ -112,25 +146,16 @@ export default {
     }
   },
   watch: {
-    own (val) {
-      console.log(val)
+    'validateModes.own' (val) {
+      // console.log(val)
     }
-  },
-  mounted () {
-    // this.capture('w-input', 'test', 'test')
   },
   methods: {
     handleSubmit () {
-      // this.$refs.form.validateAll(valid => {
-      //   // console.log(valid)
-      //   if (valid) {
-      //     alert('验证通过')
-      //   }
-      // })
-
       this.$refs.form.validateAll().then(valid => {
         if (valid) {
           alert('验证通过')
+          console.log(this.validateModes)
         }
       })
     },

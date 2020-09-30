@@ -27,6 +27,7 @@ export default {
     }
   },
   created () {
+    // 因为Vue组件渲染机制的原因，form-item中的mounted会优先于父级的mounted渲染，所以在form-item 的mounted中暴露给form的实例只能在created中监听
     this.$on('on-form-item-add', node => {
       if (node.prop) {
         this.fields.push(node)
